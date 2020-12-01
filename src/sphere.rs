@@ -67,6 +67,8 @@ impl Drawable for Sphere<f32, f32> {
 
         let position = ray.point_at(t);
         let normal = (position - self.center) / self.radius;
+        let front_face = ray.direction.dot(normal) < 0.0;
+        let normal = if front_face { normal } else { -normal };
         return Some(Intersection {
             t,
             position,
